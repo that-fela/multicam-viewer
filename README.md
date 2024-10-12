@@ -1,2 +1,3 @@
-# moderncpp-project-template
-Template for a moderncpp project
+# C++ Template
+
+Template for C++ 20. Uses CPM for package manager.
