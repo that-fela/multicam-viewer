@@ -2,16 +2,11 @@
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 # Source files
-add_executable(main_program 
+add_executable(${BIN_NAME} 
     main.cpp
 )
 
-# Local libs
-target_link_libraries(main_program 
+target_link_libraries(${BIN_NAME}  
     mylib
-)
-
-# CPM Packages
-target_link_libraries(main_program 
     fmt::fmt
 )

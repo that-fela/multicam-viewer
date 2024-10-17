@@ -1,7 +1,11 @@
 cmake_minimum_required(VERSION 3.10)
-project(MyProject)
+project(MyProject VERSION 1.0.0 LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+set(BIN_NAME main_program)
 
 include(FetchContent)
 include(cmake/CPM.cmake)
@@ -25,8 +29,8 @@ add_subdirectory(lib)
 add_subdirectory(src)
 add_subdirectory(tests)
 
-enable_compiler_warnings(main_program)
+enable_compiler_warnings(${BIN_NAME})
 enable_compiler_warnings(test_mylib)
 
-enable_sanitizers(main_program)
+enable_sanitizers(${BIN_NAME})
 enable_sanitizers(test_mylib)
