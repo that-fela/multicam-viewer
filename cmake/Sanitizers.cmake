@@ -16,7 +16,7 @@ function(enable_sanitizers target)
         endif()
 
         # Enable ThreadSanitizer (TSan)
-        option(ENABLE_TSAN "Enable ThreadSanitizer" OFF) # Usually OFF by default as it's for multithreaded code
+        option(ENABLE_TSAN "Enable ThreadSanitizer" ON) # Usually OFF by default as it's for multithreaded code
         if(ENABLE_TSAN)
             target_compile_options(${target} PRIVATE -fsanitize=thread)
             target_link_options(${target} PRIVATE -fsanitize=thread)
