@@ -1,32 +1,20 @@
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-find_package(OpenCV REQUIRED)
-find_package(Boost REQUIRED)
-
-include_directories(${OpenCV_INCLUDE_DIRS})
-include_directories(${Boost_INCLUDE_DIRS})
-include_directories(shared)
-
+function(find_cpp_files RESULT DIR)
+    file(GLOB_RECURSE CPP_FILES 
+        "${DIR}/*.cpp"
+        "${DIR}/*.cxx"
+        "${DIR}/*.cc"
+    )
+    set(${RESULT} ${CPP_FILES} PARENT_SCOPE)
+endfunction()
 
 # Server files
-add_executable(${SERVER_BIN_NAME} 
-    server/main_server.cpp
-    shared/net_comm.cpp
-)
-target_link_libraries(${SERVER_BIN_NAME}  
-    fmt::fmt
-    ${OpenCV_LIBS}
-    ${Boost_LIBRARIES}
-)
-
+find_cpp_files(SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/${SERVER_BIN_NAME} )
+add_executable(${SERVER_BIN_NAME} ${SOURCE_FILES})
+target_link_libraries(${SERVER_BIN_NAME} ${LIBRARIES})
 
 # pis files
-add_executable(${PIS_BIN_NAME}
-    pis/main_pi.cpp
-    shared/net_comm.cpp
-)
-target_link_libraries(${PIS_BIN_NAME}
-    fmt::fmt
-    ${OpenCV_LIBS}
-    ${Boost_LIBRARIES}
-)
+find_cpp_files(SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/${PIS_BIN_NAME} )
+add_executable(${PIS_BIN_NAME} ${SOURCE_FILES})
+target_link_libraries(${PIS_BIN_NAME} ${LIBRARIES})

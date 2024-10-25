@@ -5,26 +5,44 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-set(SERVER_BIN_NAME server)
-set(PIS_BIN_NAME pis)
-
 include(FetchContent)
 include(cmake/CPM.cmake)
 include(cmake/CompilerWarnings.cmake)
 include(cmake/Sanitizers.cmake)
 
 
+
+# =========== Config ===========
+
+set(SERVER_BIN_NAME server)
+set(PIS_BIN_NAME pis)
+
 # CPM Packages
 CPMAddPackage("gh:fmtlib/fmt#7.1.3")
+CPMAddPackage("gh:nlohmann/json@3.10.5")
+CPMAddPackage("gh:catchorg/Catch2@3.4.0")
 
+# Dependencies
+find_package(OpenCV REQUIRED)
+find_package(Boost REQUIRED)
 
-# Google Testing
-FetchContent_Declare(
-    googletest
-    URL https://github.com/google/googletest/archive/release-1.12.1.zip
+# Libraries
+set(LIBRARIES 
+    fmt::fmt
+    nlohmann_json::nlohmann_json
+    ${OpenCV_LIBS}
+    ${Boost_LIBRARIES}
+    CACHE INTERNAL ""
 )
-FetchContent_MakeAvailable(googletest)
-enable_testing()
+
+# Include dirs
+include_directories(${OpenCV_INCLUDE_DIRS})
+include_directories(${Boost_INCLUDE_DIRS})
+
+# ==============================
+
+
+include_directories(src)
 
 add_subdirectory(src)
 add_subdirectory(tests)
